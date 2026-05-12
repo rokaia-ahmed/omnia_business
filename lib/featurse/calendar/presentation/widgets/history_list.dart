@@ -1,0 +1,103 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:omnia_business/core/utils/app_colors.dart';
+class HistoryList extends StatelessWidget {
+  const HistoryList({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.separated(
+        shrinkWrap: true,
+        physics: const NeverScrollableScrollPhysics(),
+        itemCount: 2,
+        separatorBuilder: (_, __) =>  SizedBox(height: 20.h),
+        itemBuilder: (context, i) => HistoryCard());
+  }
+}
+
+class HistoryCard extends StatelessWidget {
+  const HistoryCard({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        color: AppColors.fillColor,
+        borderRadius: BorderRadius.circular(14),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // Header bar
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+            decoration: BoxDecoration(
+              color: AppColors.primary,
+              borderRadius:
+              const BorderRadius.vertical(top: Radius.circular(14)),
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  'Monday , 29 may 2026',
+                  style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 12,
+                      fontWeight: FontWeight.w600),
+                ),
+                Text('10 : 30 am',
+                    style: const TextStyle(
+                        color: Colors.white, fontSize: 12)),
+              ],
+            ),
+          ),
+          // Body
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'Meeting Name',
+                      style:  TextStyle(
+                          fontSize: 18.sp,
+                          color: AppColors.textColor,
+                          fontWeight: FontWeight.w600),
+                    ),
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 10, vertical: 5),
+                      decoration: BoxDecoration(
+                        color: Color(0xffD9FFE3),
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: Text(
+                        'Presence',
+                        style: TextStyle(
+                            color: Color(0xff34C759),
+                            fontSize: 10.5,
+                            fontWeight: FontWeight.w600),
+                      ),
+                    ),
+                  ],
+                ),
+                 SizedBox(height: 16.h),
+                Text(
+                  'Supervisor : ${'Eng lina'}',
+                  style:
+                   TextStyle(color: AppColors.textColor,
+                      fontWeight: FontWeight.w500,
+                      fontSize: 16.sp),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
