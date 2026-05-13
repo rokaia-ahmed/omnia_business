@@ -60,43 +60,39 @@ class _CalendarTopHeaderState extends State<CalendarTopHeader> {
     };
 
     return Container(
-      color: Colors.white,
-      padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
-      child: Container(
-        padding: const EdgeInsets.all(4),
-        decoration: BoxDecoration(
-          color: AppColors.fillColor,
-          borderRadius: BorderRadius.circular(14),
-        ),
-        child: Row(
-          children: modes.entries.map((entry) {
-            final selected = _calendarFormat == entry.value;
-            return Expanded(
-              child: GestureDetector(
-                onTap: () => setState(() => _calendarFormat = entry.value),
-                child: AnimatedContainer(
-                  duration: const Duration(milliseconds: 220),
-                  curve: Curves.easeInOut,
-                  padding: const EdgeInsets.symmetric(vertical: 10),
-                  decoration: BoxDecoration(
-                    color: selected ? AppColors.primary : Colors.transparent,
-                    borderRadius: BorderRadius.circular(11),
-                  ),
-                  child: Text(
-                    entry.key,
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: selected ? Colors.white : AppColors.textColor,
-                      fontSize: 14,
-                      fontWeight:
-                      selected ? FontWeight.w700 : FontWeight.w500,
-                    ),
+      padding: const EdgeInsets.all(4),
+      decoration: BoxDecoration(
+        color: AppColors.fillColor,
+        borderRadius: BorderRadius.circular(14),
+      ),
+      child: Row(
+        children: modes.entries.map((entry) {
+          final selected = _calendarFormat == entry.value;
+          return Expanded(
+            child: GestureDetector(
+              onTap: () => setState(() => _calendarFormat = entry.value),
+              child: AnimatedContainer(
+                duration: const Duration(milliseconds: 220),
+                curve: Curves.easeInOut,
+                padding: const EdgeInsets.symmetric(vertical: 10),
+                decoration: BoxDecoration(
+                  color: selected ? AppColors.primary : Colors.transparent,
+                  borderRadius: BorderRadius.circular(11),
+                ),
+                child: Text(
+                  entry.key,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: selected ? Colors.white : AppColors.textColor,
+                    fontSize: 14,
+                    fontWeight:
+                    selected ? FontWeight.w700 : FontWeight.w500,
                   ),
                 ),
               ),
-            );
-          }).toList(),
-        ),
+            ),
+          );
+        }).toList(),
       ),
     );
   }
@@ -191,6 +187,7 @@ class _CalendarTopHeaderState extends State<CalendarTopHeader> {
         // Selected day
         selectedDecoration: BoxDecoration(
           color: AppColors.primary,
+          shape: BoxShape.rectangle,
           borderRadius: BorderRadius.circular(10),
         ),
         selectedTextStyle: const TextStyle(
@@ -202,6 +199,7 @@ class _CalendarTopHeaderState extends State<CalendarTopHeader> {
         // Today (unselected)
         todayDecoration: BoxDecoration(
           color: AppColors.primary.withOpacity(0.18),
+          shape: BoxShape.rectangle,
           borderRadius: BorderRadius.circular(10),
         ),
         todayTextStyle: const TextStyle(
@@ -219,7 +217,27 @@ class _CalendarTopHeaderState extends State<CalendarTopHeader> {
           color: Colors.black,
           fontSize: 15,
         ),
+        defaultDecoration: BoxDecoration(
+          shape: BoxShape.rectangle,
+          borderRadius: BorderRadius.circular(10),
+        ),
+        // ✅ Weekend
+        weekendDecoration: BoxDecoration(
+          shape: BoxShape.rectangle,           // ← مهم
+          borderRadius: BorderRadius.circular(10),
+        ),
 
+        // ✅ Outside days
+        outsideDecoration: BoxDecoration(
+          shape: BoxShape.rectangle,           // ← مهم
+          borderRadius: BorderRadius.circular(10),
+        ),
+
+        // ✅ Disabled
+        disabledDecoration: BoxDecoration(
+          shape: BoxShape.rectangle,           // ← مهم
+          borderRadius: BorderRadius.circular(10),
+        ),
         // Out-of-month days
         outsideDaysVisible: true,
         outsideTextStyle: TextStyle(

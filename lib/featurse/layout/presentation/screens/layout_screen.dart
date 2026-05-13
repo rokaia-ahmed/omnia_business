@@ -7,6 +7,7 @@ import '../../../../core/utils/app_colors.dart';
 import '../../../../core/utils/app_images.dart';
 import '../../../../core/utils/text_styles.dart';
 import '../../../calendar/presentation/screens/calendar_screen.dart';
+import '../../../history/presentation/screens/history_screen.dart';
 import '../../../home/presentation/screens/home_screen.dart';
 
 class LayoutScreen extends StatefulWidget {
@@ -22,7 +23,7 @@ class _LayoutScreenState extends State<LayoutScreen> {
   List<Widget> screens = [
     HomeScreen(),
     CalendarScreen(),
-    Container(),
+    HistoryScreen(),
     Container(),
   ];
 

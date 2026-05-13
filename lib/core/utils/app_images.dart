@@ -22,4 +22,5 @@ class AppIcons {
   static const  String calendar = '$icons/calendar.svg';
   static const  String documents = '$icons/documents.svg';
   static const  String notification = '$icons/notification.svg';
+  static const  String search = '$icons/search.svg';
 }

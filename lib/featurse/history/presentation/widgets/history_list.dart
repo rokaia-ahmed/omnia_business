@@ -64,7 +64,7 @@ class HistoryCard extends StatelessWidget {
                     Text(
                       'Meeting Name',
                       style:  TextStyle(
-                          fontSize: 18.sp,
+                          fontSize: 17.sp,
                           color: AppColors.textColor,
                           fontWeight: FontWeight.w600),
                     ),
@@ -85,13 +85,13 @@ class HistoryCard extends StatelessWidget {
                     ),
                   ],
                 ),
-                 SizedBox(height: 16.h),
+                 SizedBox(height: 14.h),
                 Text(
                   'Supervisor : ${'Eng lina'}',
                   style:
                    TextStyle(color: AppColors.textColor,
                       fontWeight: FontWeight.w500,
-                      fontSize: 16.sp),
+                      fontSize: 15.sp),
                 ),
               ],
             ),
