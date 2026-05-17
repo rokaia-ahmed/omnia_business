@@ -7,7 +7,7 @@ String translateString(String english, String arabic) {
       : arabic;
 }
 
-validateName(String value) {
+String? validateName(String value) {
   Pattern pattern = r'^[A-Za-z][a-zA-Z0-9.\-_$@*!]{2,30}$';
   RegExp regex = RegExp(pattern.toString());
   if (value.isEmpty) {
@@ -18,20 +18,20 @@ validateName(String value) {
   return null;
 }
 
-validate(String value) {
+String? validate(String value) {
   if (value.isEmpty) {
     return translateString('this field is required','هذا الحقل مطلوب');
   }
   return null;
 }
 
-validatePassword(String value) {
+String? validatePassword(String value) {
   if (value.isEmpty) {
     return translateString('password is required','كلمة المرور مطلوبة');
-  } else if (value.length < 6) {
+  } else if (value.length < 8) {
     return translateString(
         'password must be at least 6 characters',
-        'يجب أن تتكون كلمة المرور من 6 أحرف على الأقل');
+        'يجب أن تتكون كلمة المرور من 8 أحرف على الأقل');
   } /*else if (!RegExp(".*[0-9].*").hasMatch(value)) {
     return
       'must contain numbers';
@@ -41,7 +41,7 @@ validatePassword(String value) {
   }*/
   return null;
 }
-validateConfirmPassword(String value, String confirm) {
+String? validateConfirmPassword(String value, String confirm) {
   if (value.isEmpty) {
     return translateString('you should enter password',
         'يجب ادخال كلمة المرور');
@@ -53,7 +53,7 @@ validateConfirmPassword(String value, String confirm) {
 }
 
 
-validateEmail(String value) {
+String? validateEmail(String value) {
   Pattern pattern = r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$';
   RegExp regex = RegExp(pattern.toString());
   if (value.isEmpty) {
@@ -66,7 +66,7 @@ validateEmail(String value) {
   return null;
 }
 
-validateMobile(String value) {
+String? validateMobile(String value) {
   if (value.isEmpty) {
     return translateString('phone is required','رقم الهاتف مطلوب');
   } else if (value.length<8) {
