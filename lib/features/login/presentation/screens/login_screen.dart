@@ -8,8 +8,9 @@ import 'package:omnia_business/core/utils/app_images.dart';
 import 'package:omnia_business/core/validators/app_validators.dart';
 import 'package:omnia_business/core/widgets/custom_buttons.dart';
 import 'package:omnia_business/core/widgets/custom_text_form_field.dart';
-import 'package:omnia_business/featurse/login/logic/login_cubit.dart';
-import 'package:omnia_business/featurse/login/presentation/widgets/field_label.dart';
+
+import '../../logic/login_cubit.dart';
+import '../widgets/field_label.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});

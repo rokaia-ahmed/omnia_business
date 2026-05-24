@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:omnia_business/featurse/login/data/repos/login_repo.dart';
-
 import '../../../core/utils/app_navigation.dart';
 import '../../../core/utils/helper/app_dialogs.dart';
 import '../../../core/utils/helper/app_helper.dart';
 import '../../layout/presentation/screens/layout_screen.dart';
+import '../data/repos/login_repo.dart';
 
 part 'login_state.dart';
 
@@ -14,7 +13,7 @@ class LoginCubit extends Cubit<LoginState> {
   LoginRepo repo ;
   LoginCubit(this.repo) : super(LoginInitial());
 
-   static LoginCubit get (context)=> BlocProvider.of(context);
+   static LoginCubit get (BuildContext context)=> BlocProvider.of(context);
 
   /// form key
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();

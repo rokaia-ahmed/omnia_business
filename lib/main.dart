@@ -8,7 +8,7 @@ import 'core/dependency_injection/injection.dart';
 import 'core/network/local/cache/chace_helper.dart';
 import 'core/network/remote/apis/dio_helper.dart';
 import 'core/utils/app_locales.dart';
-import 'featurse/splash/splash_screen.dart';
+import 'features/splash/splash_screen.dart';
 
 var navigatorKey = GlobalKey<NavigatorState>();
 void main()async {
