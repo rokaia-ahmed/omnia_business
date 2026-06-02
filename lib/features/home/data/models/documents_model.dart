@@ -48,9 +48,9 @@ class Datum {
   String fileUrl;
   int fileSize;
   String fileType;
-  DateTime createdAt;
-  DateTime updatedAt;
-  Uploader uploader;
+  String createdAt;
+  String updatedAt;
+  Uploader? uploader;
 
   Datum({
     required this.id,
@@ -69,8 +69,8 @@ class Datum {
     fileUrl: json["fileUrl"],
     fileSize: json["fileSize"],
     fileType: json["fileType"],
-    createdAt: DateTime.parse(json["createdAt"]),
-    updatedAt: DateTime.parse(json["updatedAt"]),
+    createdAt: json["createdAt"],
+    updatedAt: json["updatedAt"],
     uploader: Uploader.fromJson(json["uploader"]),
   );
 
@@ -80,9 +80,8 @@ class Datum {
     "fileUrl": fileUrl,
     "fileSize": fileSize,
     "fileType": fileType,
-    "createdAt": createdAt.toIso8601String(),
-    "updatedAt": updatedAt.toIso8601String(),
-    "uploader": uploader.toJson(),
+    "createdAt": createdAt,
+    "updatedAt": updatedAt,
   };
 }
 

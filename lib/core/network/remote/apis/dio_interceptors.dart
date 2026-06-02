@@ -21,7 +21,7 @@ class AppInterceptors extends Interceptor {
     if (lang != null) {
       options.headers['lang'] = lang == 'en' ? 'en' : 'ar';
     }
-    if (token != null) options.headers['authorization'] = token;
+    if (token != null) options.headers['Authorization'] = 'Bearer $token';
 
     return handler.next(options);
   }

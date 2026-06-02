@@ -1,4 +1,4 @@
-String baseUrl = 'https://back.ocs-omniya.com:3000/api/';
+String baseUrl = 'https://back.ocs-omniya.com/api/';
 
 class ApiConstants {
   /// login

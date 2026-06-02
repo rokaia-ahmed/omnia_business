@@ -1,17 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:omnia_business/core/utils/app_colors.dart';
+import 'package:omnia_business/features/history/logic/history_cubit.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 class HistoryList extends StatelessWidget {
-  const HistoryList({super.key});
+  final HistoryCubit cubit ;
+  final HistoryState state ;
+  const HistoryList({super.key, required this.cubit, required this.state});
 
   @override
   Widget build(BuildContext context) {
-    return ListView.separated(
-        shrinkWrap: true,
-        physics: const NeverScrollableScrollPhysics(),
-        itemCount: 2,
-        separatorBuilder: (_, __) =>  SizedBox(height: 20.h),
-        itemBuilder: (context, i) => HistoryCard());
+    bool loading = false ;
+    if(state is HistoryLoading){
+      loading = true ;
+    }else if(state is HistoryError){
+      return SizedBox();
+    }
+    return Skeletonizer(
+      enabled: loading,
+      child: ListView.separated(
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          itemCount: 2,
+          separatorBuilder: (_, _) =>  SizedBox(height: 20.h),
+          itemBuilder: (context, i) => HistoryCard()),
+    );
   }
 }
 

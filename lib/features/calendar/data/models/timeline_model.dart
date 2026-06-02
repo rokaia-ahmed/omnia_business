@@ -18,12 +18,11 @@ class TimelineModel {
   Map<String, dynamic> toJson() => {
     "success": success,
     "message": message,
-    "data": data.toJson(),
   };
 }
 
 class Data {
-  DateTime date;
+  String date;
   List<Timeline> timeline;
 
   Data({
@@ -32,14 +31,10 @@ class Data {
   });
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
-    date: DateTime.parse(json["date"]),
+    date: json["date"],
     timeline: List<Timeline>.from(json["timeline"].map((x) => Timeline.fromJson(x))),
   );
 
-  Map<String, dynamic> toJson() => {
-    "date": "${date.year.toString().padLeft(4, '0')}-${date.month.toString().padLeft(2, '0')}-${date.day.toString().padLeft(2, '0')}",
-    "timeline": List<dynamic>.from(timeline.map((x) => x.toJson())),
-  };
 }
 
 class Timeline {
@@ -47,8 +42,8 @@ class Timeline {
   String title;
   String description;
   String location;
-  DateTime startTime;
-  DateTime endTime;
+  String startTime;
+  String endTime;
   String status;
   Supervisor supervisor;
   String myAttendanceStatus;
@@ -72,8 +67,8 @@ class Timeline {
     title: json["title"],
     description: json["description"],
     location: json["location"],
-    startTime: DateTime.parse(json["startTime"]),
-    endTime: DateTime.parse(json["endTime"]),
+    startTime: json["startTime"],
+    endTime: json["endTime"],
     status: json["status"],
     supervisor: Supervisor.fromJson(json["supervisor"]),
     myAttendanceStatus: json["myAttendanceStatus"],
@@ -85,8 +80,8 @@ class Timeline {
     "title": title,
     "description": description,
     "location": location,
-    "startTime": startTime.toIso8601String(),
-    "endTime": endTime.toIso8601String(),
+    "startTime": startTime,
+    "endTime": endTime,
     "status": status,
     "supervisor": supervisor.toJson(),
     "myAttendanceStatus": myAttendanceStatus,

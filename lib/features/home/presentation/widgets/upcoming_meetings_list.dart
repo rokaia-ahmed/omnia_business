@@ -1,45 +1,83 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:omnia_business/core/utils/app_colors.dart';
+import 'package:omnia_business/features/home/logic/home_cubit.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 
-
+import '../../data/models/upcoming_meetings_model.dart';
 
 class UpcomingMeetingsList extends StatelessWidget {
   const UpcomingMeetingsList({super.key});
 
-
   @override
   Widget build(BuildContext context) {
-    final List<_MeetingItem> _meetings = const [
-      _MeetingItem(
-        title: 'Ui/Ux Meeting',
-        time: '10 : 30 Am',
-        supervisor: 'Eng. Lina',
-        status: 'Pending',
-      ),
-      _MeetingItem(
-        title: 'Ui/Ux Meeting',
-        time: '02 : 00 Pm',
-        supervisor: 'Eng. Sara',
-        status: 'Confirmed',
-      ),
-    ];
-    return    SizedBox(
-      height: 230.h,
-      child: ListView.separated(
-        scrollDirection: Axis.horizontal,
-        itemCount: _meetings.length,
-        separatorBuilder: (_, __) =>  SizedBox(width: 16.w),
-        itemBuilder: (context, i) =>
-            _MeetingCard(item: _meetings[i]),
-      ),
+    final Meeting meeting =
+      Meeting(
+        id: '',
+        title: 'ui/ux meeting',
+        description: 'test',
+        location: '',
+        startTime: '10 : 30 am',
+        endTime: '10 : 30 am',
+        status: '',
+        supervisor: Supervisor(
+          id: '',
+          name: 'eng: lina',
+          avatar: null,
+          email: '',
+        ),
+        myAttendanceStatus: '',
+        myAttendanceNote: null,
+        employees: const [],
+        totalEmployees: 3,
+      );
+    return BlocBuilder<HomeCubit, HomeState>(
+      buildWhen: (previous, current) {
+        return current is UpcomingMeetingsLoading ||
+            current is UpcomingMeetingsLoaded ||
+            current is UpcomingMeetingsError;
+      },
+      builder: (context, state) {
+        final cubit = HomeCubit.get(context);
+        if (cubit.upcomingMeetingsModel == null) {
+          return Skeletonizer(
+            child: SizedBox(
+              height: 240.h,
+              child: ListView.separated(
+                scrollDirection: Axis.horizontal,
+                itemCount: 5,
+                separatorBuilder: (context,_) => SizedBox(width: 16.w),
+                itemBuilder: (context, i) => _MeetingCard(
+                  item:meeting,
+                ),
+              ),
+            ),
+          );
+        } else if (state is UpcomingMeetingsLoaded){
+          return SizedBox(
+            height: 245.h,
+            child: ListView.separated(
+              scrollDirection: Axis.horizontal,
+              itemCount:  cubit.upcomingMeetingsModel!.data.data.length,
+              separatorBuilder: (_,_) => SizedBox(width: 16.w),
+              itemBuilder: (context, i) => _MeetingCard(
+                item: cubit.upcomingMeetingsModel!.data.data[i],
+              ),
+            ),
+          );
+
+        } else if (state is UpcomingMeetingsError) {
+          return Text('Error loading meetings');
+        }
+        return SizedBox();
+      },
     );
   }
 }
 
-
 class _MeetingCard extends StatelessWidget {
-  final _MeetingItem item;
+  final Meeting item;
 
   const _MeetingCard({required this.item});
 
@@ -67,19 +105,18 @@ class _MeetingCard extends StatelessWidget {
                   gradient: const LinearGradient(
                     begin: Alignment.topCenter,
                     end: Alignment.bottomCenter,
-                    colors: [
-                      AppColors.primary,
-                      Color(0xFF0076A8),
-                    ],
+                    colors: [AppColors.primary, Color(0xFF0076A8)],
                   ),
                 ),
-                child: const Icon(Icons.groups_outlined,
-                    color: Colors.white, size: 22),
+                child: const Icon(
+                  Icons.groups_outlined,
+                  color: Colors.white,
+                  size: 22,
+                ),
               ),
               // Status badge
               Container(
-                padding:
-                 EdgeInsets.symmetric(horizontal: 12.w, vertical: 4.h),
+                padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 4.h),
                 decoration: BoxDecoration(
                   color: Color(0xffC7EDFE),
                   borderRadius: BorderRadius.circular(50),
@@ -95,87 +132,78 @@ class _MeetingCard extends StatelessWidget {
               ),
             ],
           ),
-           SizedBox(height: 16.h),
+          SizedBox(height: 16.h),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                item.title,
-                style:  TextStyle(
-                  color: AppColors.textColor,
-                  fontSize: 18.sp,
-                  fontWeight: FontWeight.w600,
+              Expanded(
+                child: Text(
+                  item.title,
+                  style: TextStyle(
+                    color: AppColors.textColor,
+                    fontSize: 16.sp,
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
               ),
               Text(
-                item.time,
-                style:  TextStyle(color: AppColors.textColor,
-                    fontWeight: FontWeight.w500,
-                    fontSize: 14.sp),
+                item.startTime.substring(0, 10),
+                style: TextStyle(
+                  color: AppColors.textColor,
+                  fontWeight: FontWeight.w500,
+                  fontSize: 14.sp,
+                ),
               ),
             ],
           ),
-           SizedBox(height: 16.h),
+          SizedBox(height: 10.h),
           Text(
-            'Supervisor : ${item.supervisor}',
-            style:  TextStyle(
+            'Supervisor : ${item.supervisor.name}',
+            style: TextStyle(
               fontWeight: FontWeight.w500,
-              color:  AppColors.textColor,
+              color: AppColors.textColor,
               fontSize: 16.sp,
             ),
           ),
-          SizedBox(height: 16.h),
+          SizedBox(height: 14.h),
           // Avatar stack
-          _AvatarStack(),
+          AvatarStack(item: item.employees),
         ],
       ),
     );
   }
 }
 
-class _AvatarStack extends StatelessWidget {
+class AvatarStack extends StatelessWidget {
+  final List<Supervisor> item;
+  const AvatarStack({super.key, required this.item});
   @override
   Widget build(BuildContext context) {
-    const colors = [Color(0xFFFFB74D), Color(0xFF64B5F6), Color(0xFFA5D6A7)];
     return SizedBox(
       height: 40.h,
       child: Stack(
         alignment: Alignment.topLeft,
-        children: List.generate(3, (i) {
-          return Positioned(
+        children: List.generate(item.length, (i) {
+          return  item[i].avatar != null? Positioned(
             left: (i) * 24.0,
             child: Container(
               width: 40.w,
               height: 40.h,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: colors[i],
                 border: Border.all(color: Colors.white, width: 1.5),
               ),
               child: Center(
-                child: Text(
-                  ['D', 'L', 'S'][i],
-                  style: const TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w700,
-                      color: Colors.white),
+                child: Image.network(
+                  item[i].avatar,
+                  errorBuilder: (context, _, _) => SizedBox(),
                 ),
               ),
             ),
-          );
+          ):SizedBox();
         }),
       ),
     );
   }
-}
-
-class _MeetingItem {
-  final String title, time, supervisor, status;
-
-  const _MeetingItem({
-    required this.title,
-    required this.time,
-    required this.supervisor,
-    required this.status,
-  });
 }

@@ -8,7 +8,7 @@ Color chooseToastColor(ToastStates state) {
   Color color;
   switch (state) {
     case ToastStates.success:
-      color = AppColors.primary;
+      color = AppColors.second;
       break;
     case ToastStates.error:
       color = Colors.red;
