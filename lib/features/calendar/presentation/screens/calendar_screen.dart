@@ -5,7 +5,6 @@ import 'package:omnia_business/core/dependency_injection/injection.dart';
 import 'package:omnia_business/features/calendar/logic/calendar_cubit.dart';
 import '../../../../core/utils/app_colors.dart';
 import '../widgets/calendar_top_header.dart';
-import '../widgets/dashed_time_widget.dart';
 import '../widgets/time_line_card.dart';
 import '../widgets/top_title.dart';
 
@@ -29,6 +28,8 @@ class CalendarScreen extends StatelessWidget {
                   Map<String,Color> colors = {
                     'ABSENCE': Color(0xffFF6B6B),
                     'PENDING': Color(0xff279590),
+                    'PRESENCE': Color(0xff34C759),
+                    'IN_MEETING': Color(0xff279590),
                   };
                   return Column(
                     children: [
@@ -92,7 +93,7 @@ class CalendarScreen extends StatelessWidget {
                               backgroundStatus: colors[cubit.timelineModel!.data.timeline[index].myAttendanceStatus]?.withValues(alpha: 0.2)??AppColors.primary,
                             ),
                             separatorBuilder: (context, index) =>
-                                SizedBox(height: 12.h),
+                                SizedBox(height: 20.h),
                             itemCount:
                                 cubit.timelineModel!.data.timeline.length,
                           ),
