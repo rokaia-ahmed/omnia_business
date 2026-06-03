@@ -7,12 +7,13 @@ import '../../../../core/utils/app_colors.dart';
 import '../../../../core/utils/app_images.dart';
 import '../../../../core/utils/text_styles.dart';
 import '../../../calendar/presentation/screens/calendar_screen.dart';
+import '../../../documents/presentation/screens/documents_screen.dart';
 import '../../../history/presentation/screens/history_screen.dart';
 import '../../../home/presentation/screens/home_screen.dart';
 
 class LayoutScreen extends StatefulWidget {
-  const LayoutScreen({super.key, this.index});
-  final int? index;
+   LayoutScreen({super.key, this.index});
+   int? index;
   @override
   State<LayoutScreen> createState() => _LayoutScreenState();
 }
@@ -24,7 +25,7 @@ class _LayoutScreenState extends State<LayoutScreen> {
     HomeScreen(),
     CalendarScreen(),
     HistoryScreen(),
-    Container(),
+    DocumentsScreen(),
   ];
 
   List<String> texts = ['Home', 'Calendar', 'History', 'Documents'];
@@ -47,7 +48,7 @@ class _LayoutScreenState extends State<LayoutScreen> {
         leftCornerRadius: 0,
         rightCornerRadius: 0,
         gapLocation: GapLocation.none,
-        activeIndex: activeIndex,
+        activeIndex: widget.index??activeIndex,
         tabBuilder: (int index, bool isActive) {
           return Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -78,11 +79,12 @@ class _LayoutScreenState extends State<LayoutScreen> {
         },
         onTap: (index) async {
           setState(() {
+            widget.index = null;
             activeIndex = index;
           });
         },
       ),
-      body: screens[activeIndex],
+      body: screens[widget.index??activeIndex],
     );
   }
 }

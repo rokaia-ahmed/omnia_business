@@ -5,6 +5,7 @@ import '../../../../core/errors/failure.dart';
 import '../../../../core/network/remote/apis/dio_helper.dart';
 import '../../../../core/network/remote/end_points.dart';
 import '../models/documents_model.dart';
+import '../models/profile_model.dart';
 import '../models/upcoming_meetings_model.dart';
 
 class HomeRepo {
@@ -36,6 +37,26 @@ class HomeRepo {
       );
       if (response.statusCode == 200) {
         var result = DocumentsModel.fromJson(response.data);
+        return right(result);
+      }  else {
+        return left(ServerFailure.fromResponse(response));
+      }
+    } catch (e) {
+      if (e is DioException) {
+        return left(ServerFailure.fromDioError(e));
+      } else {
+        return left(ServerFailure(e.toString()));
+      }
+    }
+  }
+
+  Future<Either<Failure, ProfileModel>> getMeProfile()async{
+    try {
+      Response response = await DioHelper.getData(
+        url:ApiConstants.me,
+      );
+      if (response.statusCode == 200) {
+        var result = ProfileModel.fromJson(response.data);
         return right(result);
       }  else {
         return left(ServerFailure.fromResponse(response));

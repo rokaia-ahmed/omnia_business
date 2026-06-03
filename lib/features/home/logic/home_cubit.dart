@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:omnia_business/features/home/data/models/profile_model.dart';
 import '../data/models/documents_model.dart';
 import '../data/models/upcoming_meetings_model.dart';
 import '../data/repos/home_repos.dart';
@@ -42,6 +43,22 @@ class HomeCubit extends Cubit<HomeState> {
         ,(r){
       documentsModel = r ;
       emit(DocumentsLoaded());
+    }
+    );
+  }
+
+  /// get profile
+  ProfileModel? profileModel ;
+  void getProfile()async{
+    emit(ProfileLoading());
+    final result = await repo.getMeProfile();
+    result.fold(
+            (l){
+          emit(ProfileError());
+        }
+        ,(r){
+      profileModel = r ;
+      emit(ProfileLoaded());
     }
     );
   }

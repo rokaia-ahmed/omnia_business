@@ -34,7 +34,7 @@ class RecentDocumentList extends StatelessWidget {
         if(state is DocumentsError){
           return const Center(child: Text('Error loading documents'),);
         }
-        if (state is DocumentsLoading){
+        if (state is DocumentsLoading||cubit.documentsModel ==null){
           isEnable = true ;
         }
         return Skeletonizer(

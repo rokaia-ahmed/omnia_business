@@ -8,5 +8,6 @@ class ApiConstants {
   static const String documents = 'documents';
   static const String myHistory = 'attendance/my/history';
   static const String timeline = 'meetings/my/timeline';
+  static const String me = 'auth/me';
 
 }

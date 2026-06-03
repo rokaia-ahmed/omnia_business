@@ -12,16 +12,16 @@ class HistoryCubit extends Cubit<HistoryState> {
   static  HistoryCubit get(BuildContext context) => BlocProvider.of(context);
 
   /// get history
-  MyHistoryModel? myHistoryModel ;
-  void getHistory()async{
+  HistoryModel? historyModel ;
+  void getHistory({int? day , int? month})async{
     emit(HistoryLoading());
-    final result = await repo.getMyHistory();
+    final result = await repo.getMyHistory(day,month);
     result.fold(
             (l){
           emit(HistoryError());
         }
         ,(r){
-      myHistoryModel = r ;
+      historyModel = r ;
       emit(HistorySuccess());
     }
     );
